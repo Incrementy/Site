@@ -90,21 +90,29 @@ header h1 {
 
 /* Bottom half: text */
 .card-info {
-  flex: 0 0 40%; /* Text container takes up the remaining 40% */
+  flex: 1 1 auto; /* Allows it to grow, shrink, and sets a flexible base size */
+  min-height: 0; /* Prevents content from forcing the flex item larger than available space */
   padding: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* --- KEY CHANGE HERE --- */
+  justify-content: center; /* Vertically centers content within this flex container */
+  /* --- END KEY CHANGE --- */
 }
 
 .card-info h2 {
   margin-bottom: 8px;
   font-size: 1.2rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .card-info p {
-  font-size: 0.95rem;
+  font-size: 0.95rem; /* This will be the starting point for scaling */
   color: #555;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 footer {
