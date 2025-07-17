@@ -13,7 +13,6 @@
 
   <main>
     <section class="grid">
-      <!-- Project Card Template -->
       <a href="https://github.com/chromaticity/Recursive-Tic-Tac-Toe" class="card">
         <div class="card-image">
           <img src="img/project1.png" alt="Project 1 screenshot">
@@ -29,10 +28,10 @@
         </div>
         <div class="card-info">
           <h2>Dice Probability Graph</h2>
-          <p>Graphs the probability of rolls summing to N for various dice. It lets the user define dice with custom sides. </p>
+          <p>Graphs the probability of rolls summing to N for various dice. Lets you define dice with custom sides. </p>
         </div>
       </a>
-      <a href="https://ledr225.github.io/MultiInterval/" class="card">
+      <a href="https://incrementy.github.io/MultiInterval/" class="card">
         <div class="card-image">
           <img src="img/project3.png" alt="Project 3 screenshot">
         </div>
@@ -41,7 +40,65 @@
           <p>Plots the probability distribution of a multi-interval expresion being evaluated uniformly across each interval. </p>
         </div>
       </a>
+      <a href="https://incrementy.github.io/Color-Spaces/" class="card">
+        <div class="card-image">
+          <img src="img/project4.png" alt="Project 4 screenshot">
+        </div>
+        <div class="card-info">
+          <h2>Color Space Cross-Sections</h2>
+          <p>Takes a cross section of a color space.</p>
+        </div>
+      </a>
     </section>
   </main>
+
+  <script>
+    function adjustCardTextSize() {
+      const cards = document.querySelectorAll('.card');
+      const MIN_FONT_SIZE = 12; // Minimum font size in pixels to prevent unreadable text
+
+      cards.forEach(card => {
+        const cardInfo = card.querySelector('.card-info');
+        const paragraph = cardInfo.querySelector('p');
+        const heading = cardInfo.querySelector('h2'); 
+
+        // Store original font sizes to reset
+        const originalPFontSize = parseFloat(getComputedStyle(paragraph).fontSize);
+        const originalH2FontSize = parseFloat(getComputedStyle(heading).fontSize);
+
+        // Reset font sizes to their initial values before checking
+        paragraph.style.fontSize = originalPFontSize + 'px'; 
+        heading.style.fontSize = originalH2FontSize + 'px';   
+
+        const BUFFER_PX = 2; // A small buffer to prevent constant resizing near the edge
+
+        // Calculate available height for the paragraph
+        const headingHeight = heading.offsetHeight;
+        const cardInfoPaddingTop = parseFloat(getComputedStyle(cardInfo).paddingTop);
+        const cardInfoPaddingBottom = parseFloat(getComputedStyle(cardInfo).paddingBottom);
+        const availableHeightForParagraph = cardInfo.clientHeight - headingHeight - cardInfoPaddingTop - cardInfoPaddingBottom;
+
+        // Shrink paragraph text if it overflows
+        if (paragraph.scrollHeight > availableHeightForParagraph + BUFFER_PX) {
+            let currentPFontSize = originalPFontSize;
+            while (paragraph.scrollHeight > availableHeightForParagraph + BUFFER_PX && currentPFontSize > MIN_FONT_SIZE) {
+                currentPFontSize -= 0.5; // Decrease by smaller increments for smoother scaling
+                paragraph.style.fontSize = currentPFontSize + 'px';
+            }
+        }
+      });
+    }
+
+    // Run the function when the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', adjustCardTextSize);
+
+    // Run the function whenever the window is resized (e.g., on mobile rotation, desktop resize)
+    // Use a debounce for performance on resize events
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(adjustCardTextSize, 200); // Wait 200ms after resize stops
+    });
+  </script>
 </body>
 </html>
